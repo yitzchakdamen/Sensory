@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensory", "Sensory.csproj", "{01CDBB70-095A-CE0E-394F-06773D4F9E85}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01CDBB70-095A-CE0E-394F-06773D4F9E85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01CDBB70-095A-CE0E-394F-06773D4F9E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01CDBB70-095A-CE0E-394F-06773D4F9E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01CDBB70-095A-CE0E-394F-06773D4F9E85}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50643DFA-D9E3-47FC-BC85-FBA5376D10F1}
+	EndGlobalSection
+EndGlobal
