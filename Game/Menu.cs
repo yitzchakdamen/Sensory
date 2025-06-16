@@ -10,7 +10,7 @@ namespace Sensory
 
             while (!Victory)
             {
-                if (gameMove(game))
+                if (GameMove(game))
                     Victory = game.Checker();
             }
 
@@ -25,7 +25,7 @@ namespace Sensory
             Console.WriteLine($"Number of Agents: {game.AgentsGame.Count}");
         }
 
-        bool gameMove(Game game)
+        bool GameMove(Game game)
         {
             gameMoveCont++;
             Console.WriteLine($"\n ---> Move: {gameMoveCont}----");

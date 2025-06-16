@@ -6,7 +6,7 @@ namespace Sensory
         Zutar = 1,
         SquadLeader,
         PlatoonLeader,
-        SeniorOfficer
+        SeniorOfficer,
     }
 
     enum SensorType

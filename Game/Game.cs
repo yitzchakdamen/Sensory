@@ -10,14 +10,9 @@ namespace Sensory
 
         public void AddGameAgent()
         {
-            Sensor sensorA = Sensor.AddSensor(SensorType.Motion);
-            Sensor sensorC = Sensor.AddSensor(SensorType.Visual);
-            Sensor sensorB = Sensor.AddSensor(SensorType.Thermal);
-
-            List<Sensor> ActiveSensors = new() { sensorA, sensorB, sensorC };
             Dictionary<SensorType, int> Sensors = new() { { SensorType.Motion, 5 }, { SensorType.Thermal, 1 } };
 
-            Agent agent = Agent.AddAgent(AgentRank.Zutar, Sensors, ActiveSensors);
+            Agent agent = Agent.AddAgent(AgentRank.Zutar, Sensors);
             AgentsGame.Add(agent);
         }
 
@@ -59,7 +54,7 @@ namespace Sensory
                 }
             }
 
-            Console.WriteLine($"QuantityActual: {QuantityActual}, QuantityRequired: {QuantityRequired}");
+            Console.WriteLine($"\n --- QuantityActual: {QuantityActual}, QuantityRequired: {QuantityRequired} ---");
 
             if (QuantityActual < QuantityRequired)
             {
