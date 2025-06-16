@@ -28,7 +28,7 @@ namespace Sensory
         bool gameMove(Game game)
         {
             gameMoveCont++;
-            Console.WriteLine($"\n ---> Move: {gameMoveCont}----\n");
+            Console.WriteLine($"\n ---> Move: {gameMoveCont}----");
             Console.WriteLine($"\n ----  Select the agent you want to attach a sensor to. (Select a number from 1 to {game.AgentsGame.Count})\n");
 
             if (int.TryParse(Console.ReadLine(), out int agent) && agent > 0 && agent <= game.AgentsGame.Count)
