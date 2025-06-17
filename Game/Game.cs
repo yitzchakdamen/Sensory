@@ -7,25 +7,33 @@ namespace Sensory
     class Game
     {
         public List<Agent> AgentsGame = new();
+        public List<Agent> AgentsExposed = new();
 
         public void AddGameAgent()
         {
-            Dictionary<SensorType, int> Sensors = new() { { SensorType.Motion, 5 }, { SensorType.Thermal, 1 } };
+            AgentRank[] agentRanks = (AgentRank[])Enum.GetValues(typeof(AgentRank));
+            agentRanks.Print();
 
-            Agent agent = Agent.AddAgent(AgentRank.Zutar, Sensors);
-            AgentsGame.Add(agent);
+            if (int.TryParse(Console.ReadLine(), out int Index) && Index > 0 && Index <= agentRanks.Length)
+                AgentsGame.Add(AgentFactory.Agent((AgentRank)Index));
+            else
+                "Invalid input. Please try again.".Print(1);
         }
 
         public bool Checker()
         {
             bool Victory = true;
+            AgentsExposed.Clear();
+            " === checker agents === ".Print(6);
             foreach (Agent agent in AgentsGame)
             {
-                if (!CheckerAgent(agent.ActiveSensors, agent.Sensors))
+                if (CheckerAgent(agent.ActiveSensors, agent.Sensors))
+                    AgentsExposed.Add(agent);
+                else
                     Victory = false;
             }
             return Victory;
-            
+
         }
 
         bool CheckerAgent(List<Sensor> ActiveSensors, Dictionary<SensorType, int> Sensors)
@@ -43,18 +51,14 @@ namespace Sensory
                 if (Status.TryGetValue(SensorType, out int QuantityActiveSensors))
                 {
                     if (QuantitySensor > QuantityActiveSensors)
-                    {
                         QuantityActual += QuantityActiveSensors;
-                    }
                     else
-                    {
                         QuantityActual += QuantitySensor;
-                    }
-                    QuantityRequired += QuantitySensor;
                 }
+                QuantityRequired += QuantitySensor;
             }
 
-            Console.WriteLine($"\n --- QuantityActual: {QuantityActual}, QuantityRequired: {QuantityRequired} ---");
+            $"\n Agent XXX --- Actual Quantity : {QuantityActual}, Required Quantity: {QuantityRequired} ---\n number of active sensors: {ActiveSensors.Count}".Print(6);
 
             if (QuantityActual < QuantityRequired)
             {
@@ -66,9 +70,32 @@ namespace Sensory
 
         public void ActiveSensors(Agent agent)
         {
-            foreach (Sensor Sensors in agent.ActiveSensors)
+            "\n === active sensors === ".Print(2);
+            foreach (Sensor Sensors in agent.ActiveSensors.ToList())
             {
+                $"\n === sensor: {Sensors.Type} === ".Print(2);
                 Sensors.Active();
+                Sensors.UniqueAction(agent);
+            }
+        }
+        public void ActiveAgent(int gameMove)
+        {
+            "\n === active agent === \n".Print(1);
+            foreach (Agent agent in AgentsGame)
+            {
+                if (gameMove % 5 == 0)
+                {
+                    agent.AgentActivate();
+                }
+                else if (agent.Rank == AgentRank.OrganizationLeader && gameMove % 10 == 0)
+                {
+                    GamePropertyAgents.OrganizationLeader organizationLeader = (GamePropertyAgents.OrganizationLeader)agent;
+                    organizationLeader.OrganizationLeaderActivate();
+                }
+                else
+                {
+                    "Agent is not active".Print(1);
+                }
             }
         }
         

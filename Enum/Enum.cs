@@ -1,21 +1,22 @@
 namespace Sensory
 {
 
-    enum AgentRank
+    public enum AgentRank
     {
         Zutar = 1,
         SquadLeader,
-        PlatoonLeader,
-        SeniorOfficer,
+        SeniorCommander,
+        OrganizationLeader,
     }
 
-    enum SensorType
+    public enum SensorType
     {
-        Motion = 1,   
-        Thermal,    
-        Cellular,  
-        Audio,    
-        Visual     
+        Motion = 1,
+        Thermal,
+        Cellular,
+        Audio,
+        Visual,
+        Pulse     
     }
 
 }
