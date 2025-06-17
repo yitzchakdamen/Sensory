@@ -1,23 +1,26 @@
 namespace Sensory
 {
-    class Sensor
+    public class Sensor
     {
         public int Id { get; set; } = 4;
-        public SensorType Type { get; set; } = SensorType.Thermal;
+        public SensorType Type { get; set; }
         public int SensorStatus = 0;
 
-        static public Sensor AddSensor(SensorType sensorType)
+        public Sensor(SensorType sensorType)
         {
-            Sensor sensor = new();
-            sensor.Id = new Random().Next(1,10000);
-            sensor.Type = sensorType;
-            return sensor;
+            Id = new Random().Next(1, 10000);
+            Type = sensorType;
         }
 
         public void Active()
         {
             SensorStatus++;
-            Console.WriteLine($"Sensor {Id} {Type} is Active: num of times: {SensorStatus}");
+            $"Sensor {Id} {Type} ----  is Active    -----    num of times: {SensorStatus}".Print(2);
+        }
+
+        public virtual void UniqueAction(Agent agent)
+        {
+            Console.WriteLine(" ============== Unique Action ==============");
         }
         
     }

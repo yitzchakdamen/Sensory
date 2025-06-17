@@ -2,75 +2,84 @@ namespace Sensory
 {
     class Menu
     {
-        int gameMoveCont = 0;
+        int gameMoveCont = 1;
         public void Start(Game game)
         {
             bool Victory = false;
-            LoginMessage(game);
+            PrintMenu.LoginMessage(game.AgentsGame.Count);
 
             while (!Victory)
             {
-                if (GameMove(game))
-                    Victory = game.Checker();
+                GameMove(game);
+                game.ActiveAgent(gameMoveCont);
+                Victory = game.Checker();
+                PrintAgentsExposed(game);
+
             }
-
-            Console.WriteLine("\n ------- You won the game ------- \n");
-        
+            "\n ------- You won the game ------- \n".Print(5);
         }
 
-        void LoginMessage(Game game)
+        void GameMove(Game game)
         {
-            Console.Clear();
-            Console.WriteLine("\n ---- welcome to Sensory Game ----\n");
-            Console.WriteLine($"Number of Agents: {game.AgentsGame.Count}");
-        }
-
-        bool GameMove(Game game)
-        {
+            $"\n ___________________________ ( Move: {gameMoveCont} ) ___________________________\n".Print(5);
             gameMoveCont++;
-            Console.WriteLine($"\n ---> Move: {gameMoveCont}----");
-            Console.WriteLine($"\n ----  Select the agent you want to attach a sensor to. (Select a number from 1 to {game.AgentsGame.Count})\n");
+
+            int agent;
+            while (!(AgentSelection(game) is int intAgent && (agent = intAgent) > 0)){}
+            while (!SensorSelection(game, agent)){}
+        }
+        int? AgentSelection(Game game)
+        {
+            $"\n ----  Select the agent you want to attach a sensor to. (Select a number from 1 to {game.AgentsGame.Count})\n".Print(3);
 
             if (int.TryParse(Console.ReadLine(), out int agent) && agent > 0 && agent <= game.AgentsGame.Count)
-            {
-                while(!SensorSelection(game, agent));
-                return true;
-            }
+                return agent;
             else
-            {
-                Console.WriteLine("Invalid input. Please try again.");
-                return false;
-            }
-
+                PrintMenu.InvalidInput();
+            return null;
         }
 
         bool SensorSelection(Game game, int agentIndex)
         {
             Agent agent = game.AgentsGame[agentIndex - 1];
             SensorType[] sensorTypes = (SensorType[])Enum.GetValues(typeof(SensorType));
-            
 
-            Console.WriteLine($"\n ----  Select the sensor you want to attach to the agent. ----  \n");
-
-            foreach (SensorType sensorType in sensorTypes)
-            {
-                Console.WriteLine($"{(int)sensorType}: {sensorType}");
-            }
-            Console.WriteLine($"\n ----  Select a number from 1 to {sensorTypes.Length}\n");
+            sensorTypes.Print();
 
             if (int.TryParse(Console.ReadLine(), out int sensor) && sensor > 0 && sensor <= sensorTypes.Length)
             {
-                Sensor NewSensor = Sensor.AddSensor((SensorType)sensor);
-                agent.ActiveSensors.Add(NewSensor);
-                game.ActiveSensors(agent);
+                MakingAMove(game, sensor, agent);
                 return true;
             }
             else
             {
-                Console.WriteLine("Invalid input. Please try again.");
+                PrintMenu.InvalidInput();
                 return false;
             }
-            
+
+        }
+
+        void MakingAMove(Game game, int sensor, Agent agent)
+        {
+            Sensor NewSensor = SensorFactory.Sensor((SensorType)sensor);
+            agent.ActiveSensors.Add(NewSensor);
+            game.ActiveSensors(agent);
+        }
+
+        void PrintAgentsExposed(Game game)
+        {
+            "\n ==== all agents exposed ==== \n".Print(8);
+            foreach (Agent agent in game.AgentsExposed)
+            {
+                $"\n ---- Agent Exposed: {agent.Id} Rank: {agent.Rank} ---- \n".Print(8);
+            }
+            if (game.AgentsExposed.Count == 0)
+            {
+                "\n ---- No agents exposed ---- \n".Print(8);
+            }
+        
+            // Console.WriteLine($"The most Exposed senior agent is: {sensorTypes[^1]}");
+
         }
        
     }

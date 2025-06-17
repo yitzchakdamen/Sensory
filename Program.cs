@@ -6,8 +6,10 @@ namespace Sensory
         
         static void Main()
         {
-
+            Console.Clear();
             Game game = new Game();
+            game.AddGameAgent();
+            game.AddGameAgent();
             game.AddGameAgent();
 
             new Menu().Start(game);
