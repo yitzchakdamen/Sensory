@@ -10,7 +10,7 @@ namespace Sensory
             {
                 $"{(int)sensorType}: {sensorType}".Print(3);
             }
-            $"\n ----  Select a number from 1 to {sensorTypes.Length}\n".Print(3);
+            $"\n ----  Select a number from 1 to {sensorTypes.Length}\n".Print(5);
         }
         public static void Print(this AgentRank[] agentRanks)
         {
@@ -20,7 +20,7 @@ namespace Sensory
             {
                 $"{(int)RankType}: {RankType}".Print(3);
             }
-            $"\n ----  Select a number from 1 to {agentRanks.Length}\n".Print(3);
+            $"\n ----  Select a number from 1 to {agentRanks.Length}\n".Print(5);
         }
 
         public static void LoginMessage(int numberOfAgents)
