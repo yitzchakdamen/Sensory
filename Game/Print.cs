@@ -23,6 +23,12 @@ namespace Sensory
             $"\n ----  Select a number from 1 to {agentRanks.Length}\n".Print(5);
         }
 
+        public static void Stop()
+        {
+            "\n Press any key to continue!".Print(1);
+            Console.ReadKey();
+        }
+
         public static void LoginMessage(int numberOfAgents)
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -50,7 +56,6 @@ namespace Sensory
             Console.WriteLine("\n========== 🔴 PULSE SENSOR ACTION TRIGGERED 🔴 ==========");
             Console.WriteLine($"Sensor status: {status} (threshold: 3)");
             Console.WriteLine("Effect: Sensor removed from agent's active sensors.");
-            Console.WriteLine($"Agent ID: {agent.Id}");
             Console.WriteLine("========================================================\n");
         }
 
@@ -59,7 +64,6 @@ namespace Sensory
             Console.WriteLine("\n========== 🟠 MOTION SENSOR ACTION TRIGGERED 🟠 ==========");
             Console.WriteLine($"Sensor status: {status} (threshold: 3)");
             Console.WriteLine("Effect: Sensor removed from agent's active sensors.");
-            Console.WriteLine($"Agent ID: {agent.Id}");
             Console.WriteLine("=========================================================\n");
         }
 
@@ -88,6 +92,12 @@ namespace Sensory
             Console.WriteLine($"Rank: {agent.Rank}");
             Console.WriteLine($"Affiliation: {agent.Affiliation}");
             Console.WriteLine("===========================================================\n");
+        }
+
+        public static void WelcomeBack(User user)
+        {
+            "Welcome back ".Print(6);
+            $"{user.Name} {user.LastName}".Print(6);
         }
 
         public static void Print(this string text, int colorCode)

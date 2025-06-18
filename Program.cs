@@ -8,8 +8,8 @@ namespace Sensory
         {
             Console.Clear();
             Game game =  Game.instance;
-            game.Level = 1;
-            new UserSystem(game);
+            
+            new UserSystem(game).Start();
 
             new Menu().Start(game);
         }
