@@ -42,11 +42,10 @@ namespace Sensory
         bool SensorSelection(Game game, int agentIndex)
         {
             Agent agent = game.AgentsGame[agentIndex - 1];
-            SensorType[] sensorTypes = (SensorType[])Enum.GetValues(typeof(SensorType));
 
-            sensorTypes.Print();
+            game.sensorTypes.Print();
 
-            if (int.TryParse(Console.ReadLine(), out int sensor) && sensor > 0 && sensor <= sensorTypes.Length)
+            if (int.TryParse(Console.ReadLine(), out int sensor) && sensor > 0 && sensor <= game.sensorTypes.Length)
             {
                 MakingAMove(game, sensor, agent);
                 return true;

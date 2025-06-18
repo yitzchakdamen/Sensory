@@ -1,3 +1,4 @@
+using System.Dynamic;
 using System.Text.RegularExpressions;
 
 namespace Sensory
@@ -6,18 +7,35 @@ namespace Sensory
 
     class Game
     {
+        private static Game _instance;
         public List<Agent> AgentsGame = new();
         public List<Agent> AgentsExposed = new();
+        public AgentRank[] agentRanks = (AgentRank[])Enum.GetValues(typeof(AgentRank));
+        public SensorType[] sensorTypes = (SensorType[])Enum.GetValues(typeof(SensorType));
+        public int Level;
+        public Random rnd = new();
 
-        public void AddGameAgent()
+        private Game() { }
+
+        public static Game instance
         {
-            AgentRank[] agentRanks = (AgentRank[])Enum.GetValues(typeof(AgentRank));
-            agentRanks.Print();
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new Game();
+                }
+                return _instance;
+            }
+        }
 
-            if (int.TryParse(Console.ReadLine(), out int Index) && Index > 0 && Index <= agentRanks.Length)
-                AgentsGame.Add(AgentFactory.Agent((AgentRank)Index));
-            else
-                "Invalid input. Please try again.".Print(1);
+        public void Initialization()
+        {
+            for (int i = 1; i <= Level; i++)
+            {
+                int Index = rnd.Next(1, Level + 1);
+                AgentsGame.Add(AgentFactory.Agent((AgentRank)Index)); 
+            }
         }
 
         public bool Checker()

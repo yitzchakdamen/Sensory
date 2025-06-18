@@ -1,5 +1,15 @@
 namespace Sensory
 {
+
+    class UserSystem
+    {
+        public UserSystem(Game game)
+        {
+            game.Level = 2;
+            game.Initialization();
+        }
+    }
+
     public class User
     {
         string Name { get; set; }
