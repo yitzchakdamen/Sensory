@@ -20,7 +20,7 @@ namespace Sensory
             public Motion() : base(SensorType.Motion) { }
             public override void UniqueAction(Agent agent)
             {
-                if (SensorStatus >= 3)
+                if (SensorStatus >= 5)
                 {
                     PrintMenu.LogMotionSensor(agent, SensorStatus);
                     agent.ActiveSensors.Remove(this);
@@ -52,7 +52,6 @@ namespace Sensory
         public class Audio : Sensor
         {
             public Audio() : base(SensorType.Audio) { }
-            // עדיין אין פעולה מיוחדת
         }
 
         public class Visual : Sensor
