@@ -1,9 +1,6 @@
-using System;
-using System.Linq;
+
 using System.Management;
 using System.Net.NetworkInformation;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Sensory
 {
@@ -18,13 +15,12 @@ namespace Sensory
 
         public void InsertingTokenIntoDb(string userName)
         {
-            Console.WriteLine("Generating token based on your hardware...");
+            Console.WriteLine("Generating token based on your user name...");
             string Token = HardwareIdentifier.GetToken();
-            User? user = dal.GetUserByUserToken(Token);
-            if (user != null)
-            {
+
+            if (dal.GetUserByUserToken(Token) != null)
                 dal.DeletionToken(Token);
-            }
+
             Console.WriteLine("Token generated: " + Token);
 
             dal.InsertToken(Token, userName);
@@ -39,10 +35,9 @@ namespace Sensory
 
             if (user != null)
             {
-                Console.WriteLine("Token found for user: " + user.UserName);
-                Console.WriteLine("Do you want to log in as this user? (y/n)");
-                string choice = Console.ReadLine()!;
-                if (choice == "y")
+                Console.WriteLine($"Token found for user: {user.UserName} \nDo you want to log in as this user? (y/n)");
+
+                if (Console.ReadLine()! == "y")
                 {
                     userSystem.user = user;
                     Console.WriteLine("User logged in successfully");
