@@ -1,4 +1,6 @@
 ﻿using System;
+
+
 namespace Sensory
 {
     class Program
@@ -11,7 +13,7 @@ namespace Sensory
             UserSystem userSystem = new UserSystem(game).Start();
 
             new Menu().Start(game);
-            
+
             userSystem.PlayerStatusUpdate(game.Level, game.score);
         }  
     }
