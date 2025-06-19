@@ -77,10 +77,23 @@ namespace Sensory
                 .SetScore(Reader.GetInt32("score"))
                 .SetUserName(Reader.GetString("user_name"))
                 .SetGameStage(Reader.GetInt32("game_stage"))
-                .Build(); 
+                .Build();
             }
             Reader.Close();
             return null;
+        }
+
+        public void Update(string UserName, int score , int GameStage)
+        {
+            string queryText = @"UPDATE users SET users.game_stage = @game_stage, users.score =@score WHERE users.user_name = @user_name;";
+
+            Dictionary<string, object> parametersAndvalue = new() {
+                { "@user_name", UserName },
+                { "@game_stage", GameStage},
+                { "@score", score}};
+
+            MySqlDataReader Reader = Query(queryText, parametersAndvalue);
+            Reader.Close();
         }
 
     }

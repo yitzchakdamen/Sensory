@@ -8,29 +8,27 @@ namespace Sensory
         Game game;
         public UserSystem(Game game)
         {
-            this.game = game; 
+            this.game = game;
             DbManagement = new();
         }
 
-        public void Start()
+        public UserSystem Start()
         {
             while (user == null)
             {
                 MenuUser();
             }
             PrintMenu.WelcomeBack(user);
-            PrintMenu.Stop();
             game.Level = user.GameStage;
-            game.Initialization();
+            game.score = user.Score;
+            return this;
         }
 
         public void MenuUser()
         {
-            "\nHello Player!\n1)   I have a username\n2)   Create a new user".Print(3);
-            $"\n ----  Select a number from or 2\n".Print(5);
+            PrintMenu.MenuUser();
 
-            string switch_on = Console.ReadLine()!;
-            switch (switch_on)
+            switch (Console.ReadLine()!)
             {
                 case "1":
                     Login();
@@ -93,6 +91,13 @@ namespace Sensory
             }
             return userName;
         }
-        
+
+        public void PlayerStatusUpdate(int level, int score)
+        {
+            if (user != null)
+            {
+                DbManagement.Update(user.UserName,score, level);
+            }   
+        }
     }
 }
