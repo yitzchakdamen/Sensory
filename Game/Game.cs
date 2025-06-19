@@ -44,10 +44,10 @@ namespace Sensory
         {
             bool Victory = true;
             AgentsExposed.Clear();
-            " === checker agents === ".Print(6);
+            "\n === checker agents === ".Print(6);
             foreach (Agent agent in AgentsGame)
             {
-                if (CheckerAgent(agent.ActiveSensors, agent.Sensors))
+                if (CheckerAgent(agent.ActiveSensors, agent.Sensors, agent.Id))
                     AgentsExposed.Add(agent);
                 else
                     Victory = false;
@@ -56,7 +56,7 @@ namespace Sensory
 
         }
 
-        bool CheckerAgent(List<Sensor> ActiveSensors, Dictionary<SensorType, int> Sensors)
+        bool CheckerAgent(List<Sensor> ActiveSensors, Dictionary<SensorType, int> Sensors, int agentId)
         {
             var Status = ActiveSensors.GroupBy(Sensor => Sensor.Type).ToDictionary(Group => Group.Key, Group => Group.Count());
 
@@ -78,7 +78,7 @@ namespace Sensory
                 QuantityRequired += QuantitySensor;
             }
 
-            $"\n Agent XXX --- Actual Quantity : {QuantityActual}, Required Quantity: {QuantityRequired} ---\n number of active sensors: {ActiveSensors.Count}".Print(6);
+            $"\nAgent {agentId} --- Actual Quantity : {QuantityActual}, Required Quantity: {QuantityRequired} ---\n number of active sensors: {ActiveSensors.Count}".Print(6);
 
             if (QuantityActual < QuantityRequired)
             {
