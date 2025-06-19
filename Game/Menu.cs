@@ -15,6 +15,7 @@ namespace Sensory
                     game.score = 0;
                     break;
                 case "3":
+                    PrintMenu.Bye();
                     return false;
                 default:
                     PrintMenu.InvalidInput();
@@ -38,7 +39,7 @@ namespace Sensory
                     GameMove(game);
                     game.ActiveAgent(game.gameMoveCont);
                     victory = game.Checker();
-                    PrintAgentsExposed(game);
+                    PrintMenu.AgentsExposed(game.AgentsExposed);
                 }
                 Victory(game);
             }
@@ -51,9 +52,14 @@ namespace Sensory
             game.gameMoveCont++;
 
             int agent;
-            while (!(AgentSelection(game) is int intAgent && (agent = intAgent) > 0)){}
-            while (!SensorSelection(game, agent)){}
+            int sensor;
+
+            while (!(AgentSelection(game) is int intAgent && (agent = intAgent) > 0)) { }
+            while (!(SensorSelection(game) is int intsensor && (sensor = intsensor) > 0)) { }
+
+            MakingAMove(game, sensor, agent);
         }
+
         int? AgentSelection(Game game)
         {
             $"\n ----  Select the agent you want to attach a sensor to. (Select a number from 1 to {game.AgentsGame.Count})\n".Print(3);
@@ -65,54 +71,32 @@ namespace Sensory
             return null;
         }
 
-        bool SensorSelection(Game game, int agentIndex)
+        int? SensorSelection(Game game)
         {
-            Agent agent = game.AgentsGame[agentIndex - 1];
-
             game.sensorTypes.Print();
 
             if (int.TryParse(Console.ReadLine(), out int sensor) && sensor > 0 && sensor <= game.sensorTypes.Length)
-            {
-                MakingAMove(game, sensor, agent);
-                return true;
-            }
+                return sensor;
             else
-            {
                 PrintMenu.InvalidInput();
-                return false;
-            }
-
+            return null;
         }
 
-        void MakingAMove(Game game, int sensor, Agent agent)
+        void MakingAMove(Game game, int sensor, int agentIndex)
         {
+            Agent agent = game.AgentsGame[agentIndex - 1];
             Sensor NewSensor = SensorFactory.Sensor((SensorType)sensor);
+
             agent.ActiveSensors.Add(NewSensor);
             game.ActiveSensors(agent);
         }
 
         void Victory(Game game)
         {
-            "\n ------- You won the game ------- \n".Print(5);
-            game.score += 4 * game.Level - 2 * game.gameMoveCont;
+            "\n ------- You won the game ------- ".Print(5);
+            game.score += Math.Max((6 * (game.Level + 1)) - (2 * game.gameMoveCont),0);
             game.Level += 1; 
-            $"\n ------- You score is: {game.score} and the Level is: {game.Level} ------- \n".Print(5);
-        }
-
-        void PrintAgentsExposed(Game game)
-        {
-            "\n ==== all agents exposed ==== \n".Print(8);
-            foreach (Agent agent in game.AgentsExposed)
-            {
-                $"\n ---- Agent Exposed: {agent.Id} Rank: {agent.Rank} ---- \n".Print(8);
-            }
-            if (game.AgentsExposed.Count == 0)
-            {
-                "\n ---- No agents exposed ---- \n".Print(8);
-            }
-        
-            // Console.WriteLine($"The most Exposed senior agent is: {sensorTypes[^1]}");
-
+            $" ------- You score is: {game.score} and the Level is: {game.Level} ------- \n".Print(5);
         }
     }
     

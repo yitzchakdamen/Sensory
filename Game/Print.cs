@@ -52,6 +52,13 @@ namespace Sensory
             "\nInvalid input. Please try again.".Print(1);
         }
 
+        static public void Bye()
+        {
+            Console.Clear();
+            "\n\n\n\nBye, \nthanks for playing. \nWe'd love to see you again sometime.".Print(6);
+            Stop(); 
+        }
+
         public static void LogPulseSensor(Agent agent, int status)
         {
             Console.WriteLine("\n========== 🔴 PULSE SENSOR ACTION TRIGGERED 🔴 ==========");
@@ -97,12 +104,12 @@ namespace Sensory
 
         public static void  MainMenu()
         {
-            Console.WriteLine("\n==========  Main Menu ==========");
+            "\n==========  Main Menu ==========".Print(3);
             Console.WriteLine("1) ====>>   Continue at your level");
             Console.WriteLine("2) ====>>   Reset game");
             Console.WriteLine("3) ====>>   Exit");
-            Console.WriteLine("\nChoose your option  (1 - 3)");
-            Console.WriteLine("===========================================================\n");
+            "\nChoose your option  (1 - 3)".Print(3);
+            "===========================================================\n".Print(3);
         }
 
         public static void MenuUser()
@@ -117,6 +124,15 @@ namespace Sensory
         {
             "Welcome back ".Print(6);
             $"{user.Name} {user.LastName}".Print(6);
+        }
+
+        public static void AgentsExposed(List<Agent> AgentsExposed)
+        {
+            "\n ==== all agents exposed ==== \n".Print(8);
+            foreach (Agent agent in AgentsExposed)
+                $"\n ---- Agent Exposed: {agent.Id} Rank: {agent.Rank} ---- \n".Print(8);
+            if (AgentsExposed.Count == 0)
+                "---- No agents exposed ---- \n".Print(8);
         }
 
         public static void Print(this string text, int colorCode)
