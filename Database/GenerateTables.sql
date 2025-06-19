@@ -9,11 +9,15 @@ CREATE TABLE IF NOT EXISTS users
     last_name VARCHAR(30)
 );
 
-CREATE TABLE login_tokens (
-    user_name VARCHAR(50),
-    token VARCHAR(100),
-    created_at DATETIME
+CREATE TABLE tokens (
+    user_name VARCHAR(30) UNIQUE,
+    token VARCHAR(100) UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (token),
+    FOREIGN KEY (user_name) REFERENCES users(user_name) ON DELETE CASCADE
 );
+
+
 
 DELETE FROM intel_reports;
 DELETE FROM notifications;

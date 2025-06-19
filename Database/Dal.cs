@@ -55,6 +55,53 @@ namespace Sensory
             intelReports.Close();
         }
 
+        
+        public void InsertToken(string Token, string userName)
+        {
+            string queryText = @"
+            INSERT INTO tokens (user_name, token)
+            VALUES (@user_name, @token);";
+
+            Dictionary<string, object> parametersAndvalue = new() {
+                { "@user_name", userName },
+                { "@token", Token }};
+
+            MySqlDataReader intelReports = Query(queryText, parametersAndvalue);
+            intelReports.Close();
+        }
+
+        public void DeletionToken(string Token)
+        {
+            string queryText = @"DELETE FROM tokens WHERE token = @token;";
+
+            Dictionary<string, object> parametersAndvalue = new() {{ "@token", Token }};
+
+            MySqlDataReader reader = Query(queryText, parametersAndvalue);
+            reader.Close();
+        }
+
+
+        public User? GetUserByUserToken(string Token)
+        {
+            string queryText = $"SELECT users.* FROM users JOIN tokens ON users.user_name = tokens.user_name WHERE tokens.token = @Token;";
+
+            Dictionary<string, object> parametersAndvalue = new() { { "@Token", @Token } };
+            MySqlDataReader Reader = Query(queryText, parametersAndvalue);
+
+            if (Reader.Read())
+            {
+                return new User.Builder()
+                .SetName(Reader.GetString("first_name"))
+                .SetLastName(Reader.GetString("last_name"))
+                .SetScore(Reader.GetInt32("score"))
+                .SetUserName(Reader.GetString("user_name"))
+                .SetGameStage(Reader.GetInt32("game_stage"))
+                .Build();
+            }
+            Reader.Close();
+            return null;
+        }
+
         public bool UsernameCheck(string UserName)
         {
             if (GetUserByUserName(UserName) == null)

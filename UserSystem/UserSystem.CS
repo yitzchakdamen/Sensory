@@ -4,7 +4,7 @@ namespace Sensory
     class UserSystem
     {
         public Dal DbManagement;
-        User user;
+        public User user;
         Game game;
         public UserSystem(Game game)
         {
@@ -14,6 +14,7 @@ namespace Sensory
 
         public UserSystem Start()
         {
+            new TokenSystem(DbManagement).TokenMenu(this);
             while (user == null)
             {
                 MenuUser();
@@ -71,6 +72,8 @@ namespace Sensory
 
             Console.WriteLine(user);
             DbManagement.Insert(user);
+            new TokenSystem(DbManagement).InsertingTokenIntoDb(userName);
+
             "User created successfully Continue to login".Print(2);
         }
 
