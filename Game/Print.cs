@@ -29,18 +29,19 @@ namespace Sensory
             Console.ReadKey();
         }
 
-        public static void LoginMessage(int numberOfAgents)
+        public static void LoginMessage(int numberOfAgents, int Level)
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
             string title = " WELCOME TO THE SENSORY GAME ";
             string border = new string('═', title.Length);
+            Stop();
             Console.Clear();
             Console.WriteLine();
             Console.WriteLine($"╔{border}╗");
             Console.WriteLine($"║{title}║");
             Console.WriteLine($"╚{border}╝");
-            Console.WriteLine($" Agents Loaded: {numberOfAgents} ");
+            $" Agents Loaded: {numberOfAgents} Level: {Level}".Print(3);
             Console.WriteLine();
 
             Console.ResetColor();
@@ -92,6 +93,24 @@ namespace Sensory
             Console.WriteLine($"Rank: {agent.Rank}");
             Console.WriteLine($"Affiliation: {agent.Affiliation}");
             Console.WriteLine("===========================================================\n");
+        }
+
+        public static void  MainMenu()
+        {
+            Console.WriteLine("\n==========  Main Menu ==========");
+            Console.WriteLine("1) ====>>   Continue at your level");
+            Console.WriteLine("2) ====>>   Reset game");
+            Console.WriteLine("3) ====>>   Exit");
+            Console.WriteLine("\nChoose your option  (1 - 3)");
+            Console.WriteLine("===========================================================\n");
+        }
+
+        public static void MenuUser()
+        {
+            Stop();
+            Console.Clear();
+            "\nHello Player!\n1)   I have a username\n2)   Create a new user".Print(3);
+            $"\n ----  Select a number from or 2\n".Print(5);
         }
 
         public static void WelcomeBack(User user)

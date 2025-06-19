@@ -21,7 +21,6 @@ namespace Sensory
             }
 
             "Connected to the Gem successfully.".Print(2);
-            PrintMenu.Stop();
             return this;
         }
 

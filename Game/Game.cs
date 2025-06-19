@@ -12,7 +12,9 @@ namespace Sensory
         public List<Agent> AgentsExposed = new();
         public AgentRank[] agentRanks = (AgentRank[])Enum.GetValues(typeof(AgentRank));
         public SensorType[] sensorTypes = (SensorType[])Enum.GetValues(typeof(SensorType));
-        public int Level;
+        public int Level = 1;
+        public int score = 0;
+        public int gameMoveCont = 1;
         public Random rnd = new();
 
         private Game() { }

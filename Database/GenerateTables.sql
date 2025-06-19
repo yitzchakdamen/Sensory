@@ -9,6 +9,12 @@ CREATE TABLE IF NOT EXISTS users
     last_name VARCHAR(30)
 );
 
+CREATE TABLE login_tokens (
+    user_name VARCHAR(50),
+    token VARCHAR(100),
+    created_at DATETIME
+);
+
 DELETE FROM intel_reports;
 DELETE FROM notifications;
 DELETE FROM people_status;

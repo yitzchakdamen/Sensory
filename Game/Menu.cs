@@ -2,27 +2,53 @@ namespace Sensory
 {
     class Menu
     {
-        int gameMoveCont = 1;
+        public bool MainStart(Game game)
+        {
+            PrintMenu.MainMenu();
+
+            switch (Console.ReadLine()!)
+            {
+                case "1":
+                    break;
+                case "2":
+                    game.Level = 1;
+                    game.score = 0;
+                    break;
+                case "3":
+                    return false;
+                default:
+                    PrintMenu.InvalidInput();
+                    MainStart(game);
+                    break;
+            }
+
+            game.Initialization();
+            return true;
+        }
+
         public void Start(Game game)
         {
-            bool Victory = false;
-            PrintMenu.LoginMessage(game.AgentsGame.Count);
-
-            while (!Victory)
+            while (MainStart(game))
             {
-                GameMove(game);
-                game.ActiveAgent(gameMoveCont);
-                Victory = game.Checker();
-                PrintAgentsExposed(game);
+                bool victory = false;
+                PrintMenu.LoginMessage(game.AgentsGame.Count, game.Level);
 
+                while (!victory)
+                {
+                    GameMove(game);
+                    game.ActiveAgent(game.gameMoveCont);
+                    victory = game.Checker();
+                    PrintAgentsExposed(game);
+                }
+                Victory(game);
             }
-            "\n ------- You won the game ------- \n".Print(5);
+
         }
 
         void GameMove(Game game)
         {
-            $"\n ___________________________ ( Move: {gameMoveCont} ) ___________________________\n".Print(5);
-            gameMoveCont++;
+            $"\n ___________________________ ( Move: {game.gameMoveCont} ) ___________________________\n".Print(5);
+            game.gameMoveCont++;
 
             int agent;
             while (!(AgentSelection(game) is int intAgent && (agent = intAgent) > 0)){}
@@ -65,6 +91,14 @@ namespace Sensory
             game.ActiveSensors(agent);
         }
 
+        void Victory(Game game)
+        {
+            "\n ------- You won the game ------- \n".Print(5);
+            game.score += 4 * game.Level - 2 * game.gameMoveCont;
+            game.Level += 1; 
+            $"\n ------- You score is: {game.score} and the Level is: {game.Level} ------- \n".Print(5);
+        }
+
         void PrintAgentsExposed(Game game)
         {
             "\n ==== all agents exposed ==== \n".Print(8);
@@ -80,7 +114,6 @@ namespace Sensory
             // Console.WriteLine($"The most Exposed senior agent is: {sensorTypes[^1]}");
 
         }
-       
     }
     
 }
